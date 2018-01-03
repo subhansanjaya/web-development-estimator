@@ -1,20 +1,128 @@
-<!--The content below is only a placeholder and can be replaced.-->
-<div style="text-align:center">
-  <h1>
-    Welcome to {{title}}!
-  </h1>
-  <img width="300" src="data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIiBlbmNvZGluZz0idXRmLTgiPz4NCjwhLS0gR2VuZXJhdG9yOiBBZG9iZSBJbGx1c3RyYXRvciAxOS4xLjAsIFNWRyBFeHBvcnQgUGx1Zy1JbiAuIFNWRyBWZXJzaW9uOiA2LjAwIEJ1aWxkIDApICAtLT4NCjxzdmcgdmVyc2lvbj0iMS4xIiBpZD0iTGF5ZXJfMSIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIiB4bWxuczp4bGluaz0iaHR0cDovL3d3dy53My5vcmcvMTk5OS94bGluayIgeD0iMHB4IiB5PSIwcHgiDQoJIHZpZXdCb3g9IjAgMCAyNTAgMjUwIiBzdHlsZT0iZW5hYmxlLWJhY2tncm91bmQ6bmV3IDAgMCAyNTAgMjUwOyIgeG1sOnNwYWNlPSJwcmVzZXJ2ZSI+DQo8c3R5bGUgdHlwZT0idGV4dC9jc3MiPg0KCS5zdDB7ZmlsbDojREQwMDMxO30NCgkuc3Qxe2ZpbGw6I0MzMDAyRjt9DQoJLnN0MntmaWxsOiNGRkZGRkY7fQ0KPC9zdHlsZT4NCjxnPg0KCTxwb2x5Z29uIGNsYXNzPSJzdDAiIHBvaW50cz0iMTI1LDMwIDEyNSwzMCAxMjUsMzAgMzEuOSw2My4yIDQ2LjEsMTg2LjMgMTI1LDIzMCAxMjUsMjMwIDEyNSwyMzAgMjAzLjksMTg2LjMgMjE4LjEsNjMuMiAJIi8+DQoJPHBvbHlnb24gY2xhc3M9InN0MSIgcG9pbnRzPSIxMjUsMzAgMTI1LDUyLjIgMTI1LDUyLjEgMTI1LDE1My40IDEyNSwxNTMuNCAxMjUsMjMwIDEyNSwyMzAgMjAzLjksMTg2LjMgMjE4LjEsNjMuMiAxMjUsMzAgCSIvPg0KCTxwYXRoIGNsYXNzPSJzdDIiIGQ9Ik0xMjUsNTIuMUw2Ni44LDE4Mi42aDBoMjEuN2gwbDExLjctMjkuMmg0OS40bDExLjcsMjkuMmgwaDIxLjdoMEwxMjUsNTIuMUwxMjUsNTIuMUwxMjUsNTIuMUwxMjUsNTIuMQ0KCQlMMTI1LDUyLjF6IE0xNDIsMTM1LjRIMTA4bDE3LTQwLjlMMTQyLDEzNS40eiIvPg0KPC9nPg0KPC9zdmc+DQo=">
-</div>
-<h2>Here are some links to help you start: </h2>
-<ul>
-  <li>
-    <h2><a target="_blank" href="https://angular.io/tutorial">Tour of Heroes</a></h2>
-  </li>
-  <li>
-    <h2><a target="_blank" href="https://github.com/angular/angular-cli/wiki">CLI Documentation</a></h2>
-  </li>
-  <li>
-    <h2><a target="_blank" href="https://blog.angular.io//">Angular blog</a></h2>
-  </li>
-</ul>
+<div class="container" id="main">
+    <div class="row">
 
+            <div class="col-md-8" id="project_title_div">
+                <label class="heading_small_text"class="heading_small_text">Project Title </label>   <div class="heading_text"><label  *ngIf="isViewForm">{{projectTitle}}</label></div>
+
+                <div *ngIf="!isViewForm">   
+                    <input value="{{projectTitle}}"  name="project_tile"     (change)="onProjectTitleChange($event.target.value)"/>
+                </div> 
+
+            </div>
+            
+            <div class="col-md-4" id="default_rate_div">
+
+                <label >Default Rate</label>
+                <div class="heading_text">
+                <label *ngIf="isViewForm" (click)="isEdit=true" from="name">{{estimationCurrency}}{{defaultRate}}</label>
+</div>
+
+
+                <div *ngIf="!isViewForm">
+                    <input myNumberOnly value="{{defaultRate}}" type="text" name="project_tile" (keydown.enter)="isEdit=false"  (change)="onProjectEstimationChange($event.target.value)"/>
+
+                    <select (change)="onChange($event.target.value)">
+                        <option *ngFor="let i of currencies">{{i}}</option>
+                    </select>
+                </div>
+
+            </div>
+
+
+
+ </div>
+
+    <div class="row">
+
+            <table class="table table-striped">
+                    <thead>
+                      <tr>
+                        <th class="left_text">Description of Task</th>
+                        <th>Hours</th>
+                        <th></th>
+                        <th>Rate</th>
+                        <th>Estimated Fee</th>
+                        <th  *ngIf="!isViewForm"></th>
+                      </tr>
+                    </thead>
+                    <tbody >
+                
+
+                        <tr *ngFor="let task of tasks; let i = index">
+
+                            <td class="left_text"  style="width: 10%">
+                                <input [(ngModel)]="task.description" placeholder="Enter Value"  *ngIf="!isViewForm">
+                                <p  *ngIf="isViewForm">{{task.description}}</p>
+
+
+
+                            </td>
+
+                            <td style="width: 10%">
+                                    <input  myNumberOnly *ngIf="!isViewForm"  placeholder="Enter Value"  [(ngModel)]="task.hours" (ngModelChange)="calculateEstimate(task)">
+                                    <p  *ngIf="isViewForm">{{task.hours}}</p>
+                            </td>
+
+                            <td class="operator">x</td>
+                            
+                            <td style="width: 10%">
+                                <input myNumberOnly [(ngModel)]="task.rate" *ngIf="!isViewForm" placeholder="Enter Value" (ngModelChange)="calculateEstimate(task)">
+                                <p  *ngIf="isViewForm">{{task.rate}}</p>
+                            </td>
+
+                            <td style="width: 10%">
+                                {{task.estimateFee}}
+                            </td>
+
+                            <td style="width: 2%"  *ngIf="!isViewForm">
+                                <a href="#" (click)="deleteTask(i)"><i class="fa fa-trash-o"></i></a>
+                            </td>
+
+                            
+
+                        </tr>
+
+                        <tr style="background: none! important;">
+                                <td style="width: 10%"></td>
+                                <td style="width: 10%"></td>
+                                <td style="width: 10%"></td>
+                                <td style="width: 10%"></td>
+                        
+                        <td ><p class="heading_text">{{estimationCurrency}}{{totalEstimate}}</p></td></tr>
+
+                     
+
+                    </tbody>
+
+
+                  </table>
+    </div>
+
+    <div class="row"  *ngIf="!isViewForm">
+        <div class="col-sm"> <button  (click)="addTask()" type="button" class="btn"><i class="fa fa-plus" aria-hidden="true"></i> ADD TASK</button> <a href="#" (click)="resetForm()">Reset form</a></div> <div class="col-sm"> </div>    <div class="col-sm"> </div>
+    </div>
+
+    <div class="row">
+            <div class="col-sm"></div>
+            <div class="col-sm"></div>
+
+       <div class="col-sm" class='no-print' >
+
+            <div class="row"  *ngIf="!isViewForm">
+                    
+            <button (click)="viewEstimate()" type="button" class="btn btn-primary"><div>VIEW ESTIMATE</div><div> <small>IN PRINT READY FORMAT</small>
+                </div></button>
+
+                </div>
+                <div class="row"  *ngIf="isViewForm">
+
+                <a href="#" (click)="viewEstimate()"><<< Go Back</a>
+
+                </div>
+        </div>
+    </div>
+
+</div><!-- .container -->
+
+
+ 

@@ -1,0 +1,75 @@
+#main {
+    margin-top: 2%;
+}
+
+#project_title_div {
+    border-right: 1px solid #cccccc;
+    border-bottom: 1px solid #cccccc;
+}
+
+
+
+table {
+    text-align: center;
+}
+
+ .table td {
+    padding-bottom: 4px;
+    padding-top: 4px;
+}
+
+.table td p {
+    margin: 0px;
+}
+
+.table th {
+    padding-bottom: 5px;
+}
+
+#default_rate_div {
+    border-bottom: 1px solid #cccccc;  
+}
+
+.heading_small_text {
+    font-size: .6875em;
+    text-align: center;
+    color: rgba(0,0,0,.5);
+    text-transform: uppercase;
+}
+
+.heading_text {
+    font-size: 1.5em;
+    font-weight: bold;
+    color: #000000;
+    line-height: 1.25em;
+}
+
+th {
+    text-align: center;
+}
+
+.left_text {
+    text-align: left;
+}
+
+.operator {
+    color: rgba(0,0,0,.5); 
+    font-size: .75em;
+    text-align: center;
+}
+
+
+@media print
+{    
+    .no-print, .no-print *
+    {
+        display: none !important;
+    }
+}
+
+@media only screen and (max-width: 700px) {
+    #project_title_div {
+            border: none;
+        }
+    }
+
