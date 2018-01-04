@@ -10,7 +10,7 @@ export class AppComponent {
 
   projectTitle="Untitled Project";
   defaultRate="0";
-  currencies=['$', '£', '¥', '£', '₹'];
+  currencies=['$' , '£', '€', '¥',  '₹'];
   totalEstimate = 0;
   isViewForm = false;
 
