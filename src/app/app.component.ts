@@ -28,6 +28,16 @@ onProjectTitleChange (value) {
 
 onProjectEstimationChange (value){
   this. defaultRate=value;
+
+
+  for(var i = 0; i < this.tasks.length; i++){
+        this.tasks[i].rate = value;
+    this.tasks[i].estimateFee =  this.tasks[i].hours *  this.tasks[i].rate;
+
+  }
+
+
+
 }
 
   tasks=[{
